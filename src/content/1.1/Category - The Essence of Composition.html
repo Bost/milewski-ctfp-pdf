@@ -20,7 +20,7 @@
         </script>
         <style>
          body {
-		         /* margin: 40px; */
+             /* margin: 40px; */
              font-family: 'Open Sans', sans-serif;
              color: #444;
              font-size: 16px;
@@ -28,39 +28,39 @@
              font-weight: 400;
          }
          .wrapper {
-		         display: grid;
+             display: grid;
              grid-template-columns: minmax(800px, 1fr) 800px;
          }
 
          .box {
-		         border-radius: 5px;
+             border-radius: 5px;
          }
 
          .a {
-		         grid-column: 1;
-		         grid-row: 1;
+             grid-column: 1;
+             grid-row: 1;
          }
 
          .b {
-		         grid-column: 2;
-		         grid-row: 1;
-		         display: grid;
+             grid-column: 2;
+             grid-row: 1;
+             display: grid;
              grid-template-rows: 1900px 310px 300px;
          }
 
          .c {
-		         grid-column: 1;
-		         grid-row: 1;
+             grid-column: 1;
+             grid-row: 1;
          }
 
          .d {
-		         grid-column: 1;
-		         grid-row: 2;
+             grid-column: 1;
+             grid-row: 2;
          }
 
          .e {
-		         grid-column: 1;
-		         grid-row: 3;
+             grid-column: 1;
+             grid-row: 3;
          }
         </style>
         <body>
@@ -149,7 +149,7 @@
 
 ;; TODO compute as a test
 (let [x 1]
-	(= ((comp h (comp g f)) x) ((comp (comp h g) f) x)))
+  (= ((comp h (comp g f)) x) ((comp (comp h g) f) x)))
                         </code></pre>
                     </div>
                     <div class="box e">
@@ -169,4 +169,3 @@
         </body>
     </head>
 </html>
-
