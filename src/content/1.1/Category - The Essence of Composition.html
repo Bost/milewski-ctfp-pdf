@@ -36,37 +36,36 @@
 		         border-radius: 5px;
          }
 
-         .c {
-		         grid-column: 1 / 2;
-		         grid-row: 1 / 2;
-         }
-
-         .d {
-		         grid-column: 2 / 3;
-		         grid-row: 1 / 2;
-		         display: grid;
-             grid-template-rows: 1900px 310px 300px;
-         }
-
-         .e {
+         .a {
 		         grid-column: 1;
 		         grid-row: 1;
          }
 
-         .f {
+         .b {
+		         grid-column: 2;
+		         grid-row: 1;
+		         display: grid;
+             grid-template-rows: 1900px 310px 300px;
+         }
+
+         .c {
+		         grid-column: 1;
+		         grid-row: 1;
+         }
+
+         .d {
 		         grid-column: 1;
 		         grid-row: 2;
          }
 
-         .g {
+         .e {
 		         grid-column: 1;
 		         grid-row: 3;
          }
-
         </style>
         <body>
             <div class="wrapper">
-                <div class="box c">
+                <div class="box a">
                     <div class="post-content"> <br>
                         <blockquote>
                             <p>I was overwhelmed by the positive response to my previous post, the <a href="https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/">Preface to Category Theory for Programmers</a>. At the same time, it scared the heck out of me because I realized what high expectations people were placing in me. I&#x2019;m afraid that no matter what I&#x2019;ll write, a lot of readers will be disappointed. Some readers would like the book to be more practical, others more abstract. Some hate C++ and would like all examples in Haskell, others hate Haskell and demand examples in Java. And I know that the pace of exposition will be too slow for some and too fast for others. This will not be the perfect book. It will be a compromise. All I can hope is that I&#x2019;ll be able to share some of my aha! moments with my readers. Let&#x2019;s start with the basics.</p>
@@ -139,12 +138,9 @@
                             <a href="https://twitter.com/BartoszMilewski" class="twitter-follow-button">Follow @BartoszMilewski</a></p>
                     </div>
                 </div>
-                <div class="box d">
-                    <div class="box e">
-                        <pre><code class="language-klipse">(str "E")
-                        </code></pre>
-                    </div>
-                    <div class="box f">
+                <div class="box b">
+                    <div class="box c"></div>
+                    <div class="box d">
                         <pre><code class="language-klipse">
 ;; Composition is associative
 (defn f [x] (str "f" x "f"))
@@ -156,7 +152,7 @@
 	(= ((comp h (comp g f)) x) ((comp (comp h g) f) x)))
                         </code></pre>
                     </div>
-                    <div class="box g">
+                    <div class="box e">
                         <pre><code class="language-klipse">
 ;; Identity
 (defn f [x] identity)
