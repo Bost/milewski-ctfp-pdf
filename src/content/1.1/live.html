@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!-- <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css"> -->
+        <link rel="stylesheet" type="text/css" href="../codemirror.css">
+        <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+        <script type="text/javascript" src="../jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../klipse_settings.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css">
+        <style>
+         .b {
+             grid-template-rows: 1900px 310px 300px;
+         }
+        </style>
+        <script>
+         $(function(){
+             $("#content").load("Category%20-%20The%20Essence%20of%20Composition.html"); 
+         });
+        </script> 
+    </head>
+    <body>
+        <div class="wrapper">
+            <div id="content" class="box a"></div>
+            <div class="box b">
+                <div class="box c"></div>
+                <div class="box d">
+                    <pre><code class="language-klipse">
+;; Composition is associative
+(defn f [x] (str "f" x "f"))
+(defn g [x] (str "g" x "g"))
+(defn h [x] (str "h" x "h"))
+
+;; TODO compute as a test
+(let [x 1]
+  (= ((comp h (comp g f)) x) ((comp (comp h g) f) x)))
+                    </code></pre>
+                </div>
+                <div class="box e">
+                    <pre><code class="language-klipse">
+;; Identity
+(defn f [x] identity)
+(defn ida [a] a)
+(defn idb [b] b)
+
+(let [x 1]
+  (= ((comp f ida) x) (f x) ((comp idb f) x)))
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+        <!-- <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script> -->
+        <script src="../klipse_plugin.js"></script>
+    </body>
+</html>
