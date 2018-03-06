@@ -9,17 +9,21 @@
         <script type="text/javascript" src="../klipse_settings.js"></script>
         <link rel="stylesheet" type="text/css" href="../style.css">
         <style>
+         .CodeMirror {
+             font-size: 13px;
+             line-height: 1.42857143;
+         }
          .b {
-             grid-template-rows: 1900px 310px 300px;
+             grid-template-rows: 0px 2230px 310px 300px;
          }
         </style>
         <script>
          // for google-chrome a web server must be running; firefox doesn't need that
          // $ python3 -m http.server
          $(function(){
-             $("#content").load("Category%20-%20The%20Essence%20of%20Composition.html"); 
+             $("#content").load("Category%20-%20The%20Essence%20of%20Composition.html");
          });
-        </script> 
+        </script>
     </head>
     <body>
         <div class="wrapper">
@@ -27,6 +31,97 @@
             <div class="box b">
                 <div class="box c"></div>
                 <div class="box d">
+                    <pre><code class="language-klipse">
+;; Get a grip on the html canvas element I inserted on this page
+(def canvas (.getElementById js/document "canvas-2d"))
+(def ctx    (.getContext canvas "2d"))
+
+;; Draws a blue circle with radius `r` on the canvas on point [x y]
+(defn draw-point [x y]
+(let [r 5] ;; radius
+  (set! (.-fillStyle ctx) "blue")
+  (.beginPath ctx)
+  (.arc ctx x y r 0 (* 2 Math/PI))
+  (.fill ctx)))
+
+;; Draws a red Bézier curve and its blue control points on the canvas:
+;; * Linear interpolant of corresponding points on the linear Bézier curves from
+;;   P0 to P1 and from P1 to P2 respectively
+;; * 1st derivation: The tangents to the curve at P0 and P2 intersect at P1. As
+;;   t increases from 0 to 1, the curve departs from P0 in the direction of P1
+(defn draw-bezier-curve [[x1 y1] [x2 y2] [x3 y3]]
+  ;; draw curve
+  (set! (.-strokeStyle ctx) "red")
+  (set! (.-lineWidth   ctx) 2)
+  (.beginPath ctx)
+  (.moveTo ctx x1 y1)
+  (.quadraticCurveTo ctx x2 y2 x3 y3)
+  (.stroke ctx)
+  (.closePath ctx)
+  ;; draw control points
+  (draw-point x1 y1)
+  (draw-point x2 y2)
+  (draw-point x3 y3))
+
+
+;; Center the *drawing* canvas within the *html* canvas and draw the curves
+;;
+;; Reason for centering: keep the coordinates simple AND
+;; see the complete shapes (not cropped at the edge of the html canvas)
+;; make the ratio 1 to see what I mean with 'cropped at the edge'
+;;
+(let [wc (.-width canvas)  ;; width of *html* canvas
+      hc (.-height canvas) ;; height of *html* canvas
+      ratio 0.9            ;; ratio of *html* canvas to use as *drawing* canvas
+      t  (/ (- 1 ratio) 2) ;; translation constant
+      w  (* ratio wc)      ;; width of *drawing* canvas
+      h  (* ratio hc)      ;; height of *drawing* canvas
+      x  (* 1/2 w)         ;; x val in the middle of 0 and w
+      y  (* 1/2 h)]        ;; y val in the middle of 0 and h
+
+  ;; clear *html* canvas
+  (.clearRect ctx 0 0 wc hc)
+
+  ;; Center the *drawing* canvas in the *html* canvas
+  (.save ctx)
+  (.translate ctx (* t wc) (* t hc))
+
+  ;; Draw a grey border around the *drawing* canvas
+  (set! (.-lineWidth ctx) 1)
+  (set! (.-strokeStyle ctx) "grey")
+  (.strokeRect ctx 0 0 w h)
+
+  ;; Draw main 'anchor' points
+  ;; This is what I meant with 'simple coordinates':
+  ;; (draw-point 0 0)
+  ;; (draw-point x y)
+  ;; (draw-point w h)
+
+  ;; Increasing ascending curve
+  ;; (draw-bezier-curve [0 h] [w h] [w 0])
+
+  ;; Swoosh
+  ;; (draw-bezier-curve [0 y] [0 h] [w 0])
+  (draw-bezier-curve [0 x] [x (- y (/ y 2))] [w x])
+  (draw-bezier-curve [0 x]
+                     [(+ 0 (/ x 2)) (+ x (/ y 4))]
+                     [(- w (/ w 2)) (+ x (/ x 4))])
+
+  (draw-bezier-curve [(- w (/ w 2)) (+ x (/ x 4))]
+                     [(+ x (/ x 2)) (+ y (/ y 4))]
+                     [w y])
+
+  ;; normal curve
+  ;; (draw-bezier-curve [0 h] [x 0] [w h])
+
+  ;; my pulse after a useless meeting
+  ;; (draw-bezier-curve [0 y] [x y] [w y])
+
+  (.restore ctx))
+                    </code></pre>
+                    <canvas id="canvas-2d" width="400" height="400"></canvas>
+                </div>
+                <div class="box e">
                     <pre><code class="language-klipse">
 ;; Composition is associative
 (defn f [x] (str "f" x "f"))
@@ -38,7 +133,7 @@
   (= ((comp h (comp g f)) x) ((comp (comp h g) f) x)))
                     </code></pre>
                 </div>
-                <div class="box e">
+                <div class="box f">
                     <pre><code class="language-klipse">
 ;; Identity
 (defn f [x] identity)
